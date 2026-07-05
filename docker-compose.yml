@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - JWT_SECRET=${JWT_SECRET:?Set JWT_SECRET in a .env file or your shell}
+    volumes:
+      - concert-data:/data
+    restart: unless-stopped
+
+volumes:
+  concert-data:

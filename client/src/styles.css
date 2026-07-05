@@ -1,0 +1,855 @@
+/* ---------------------------------------------------------------------------
+   Concert Chronicle — design tokens
+   The palette is "house lights down": a deep indigo room, an amber marquee,
+   and ticket-stub cardstock. The stub is the signature element; everything
+   else stays quiet around it.
+--------------------------------------------------------------------------- */
+:root {
+  --night: #17141f; /* page background */
+  --night-2: #221d30; /* raised surfaces on the dark side */
+  --marquee: #ffb53f; /* amber accent: actions, focus, underlines */
+  --stub: #f4e9d3; /* ticket cardstock */
+  --stub-shade: #e7d9bc; /* stub edge shading */
+  --ink: #241b33; /* ink printed on cardstock */
+  --ink-soft: #5c5170; /* secondary ink on cardstock */
+  --dust: #9a91ad; /* secondary text on the dark side */
+  --red: #c8433c; /* destructive actions, ADMIT-ONE red */
+
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-body: "Barlow", "Helvetica Neue", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--night);
+  color: var(--stub);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 20px 96px;
+}
+
+a {
+  color: var(--marquee);
+}
+
+:focus-visible {
+  outline: 2px solid var(--marquee);
+  outline-offset: 2px;
+}
+
+/* ------------------------------- header ---------------------------------- */
+
+.marquee {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 20px;
+  border-bottom: 1px solid rgba(244, 233, 211, 0.14);
+  margin-bottom: 36px;
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--stub);
+  text-decoration: none;
+  border-bottom: 3px solid var(--marquee);
+  padding-bottom: 2px;
+}
+
+.marquee-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.whoami {
+  color: var(--dust);
+  font-size: 14px;
+}
+
+/* ------------------------------- buttons --------------------------------- */
+
+.btn-primary,
+.btn-quiet,
+.btn-danger {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 3px;
+  padding: 10px 22px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  border: 1px solid transparent;
+}
+
+.btn-primary {
+  background: var(--marquee);
+  color: var(--ink);
+  border-color: var(--marquee);
+}
+.btn-primary:hover {
+  background: #ffc662;
+}
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.btn-small {
+  font-size: 15px;
+  padding: 7px 16px;
+}
+
+.btn-quiet {
+  background: transparent;
+  color: var(--stub);
+  border-color: rgba(244, 233, 211, 0.35);
+}
+.btn-quiet:hover {
+  border-color: var(--stub);
+}
+
+.btn-danger {
+  background: transparent;
+  color: var(--red);
+  border-color: var(--red);
+}
+.btn-danger:hover {
+  background: rgba(200, 67, 60, 0.12);
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: var(--dust);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.link-button:hover {
+  color: var(--stub);
+}
+
+/* ------------------------------ stats strip ------------------------------ */
+
+.stats-strip {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px dashed rgba(244, 233, 211, 0.2);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-value {
+  font-family: var(--font-mono);
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--stub);
+  line-height: 1.1;
+}
+
+.stat-label {
+  font-family: var(--font-display);
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dust);
+}
+
+/* -------------------------- the ticket stub ------------------------------ */
+
+.ticket-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.ticket {
+  display: flex;
+  background: var(--stub);
+  color: var(--ink);
+  text-decoration: none;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+}
+
+.ticket:hover {
+  transform: translateY(-2px) rotate(-0.3deg);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+/* Punched notches where the perforation meets the edges. */
+.ticket::before,
+.ticket::after {
+  content: "";
+  position: absolute;
+  left: 74px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--night);
+  transform: translateX(-50%);
+}
+.ticket::before {
+  top: -9px;
+}
+.ticket::after {
+  bottom: -9px;
+}
+
+.ticket-stub-edge {
+  flex: 0 0 74px;
+  border-right: 2px dashed rgba(36, 27, 51, 0.35);
+  background: var(--stub-shade);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ticket-serial {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  color: var(--ink-soft);
+  transform: rotate(180deg);
+  writing-mode: vertical-rl;
+  white-space: nowrap;
+}
+
+.ticket-body {
+  padding: 16px 20px 18px;
+  flex: 1;
+  min-width: 0;
+}
+
+.ticket-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.ticket-date {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+}
+
+.ticket-rating {
+  color: var(--red);
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+
+.rating-empty {
+  color: rgba(36, 27, 51, 0.18);
+}
+
+.ticket-headliner {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin: 6px 0 2px;
+  overflow-wrap: anywhere;
+}
+
+.ticket-openers {
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.ticket-venue {
+  margin: 4px 0 0;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.ticket-city {
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+.ticket-photos {
+  display: inline-block;
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+  border: 1px solid rgba(36, 27, 51, 0.25);
+  border-radius: 999px;
+  padding: 1px 10px;
+}
+
+/* ------------------------------ empty state ------------------------------ */
+
+.empty-state {
+  text-align: center;
+  padding: 72px 20px;
+  border: 1px dashed rgba(244, 233, 211, 0.25);
+  border-radius: 8px;
+  color: var(--dust);
+}
+
+.empty-headline {
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--stub);
+  margin: 0 0 8px;
+}
+
+.empty-state .btn-primary {
+  margin-top: 20px;
+}
+
+/* -------------------------------- forms ---------------------------------- */
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: 38px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0 0 28px;
+}
+
+.form-page,
+.auth-card {
+  max-width: 560px;
+}
+
+label {
+  display: block;
+  margin: 18px 0 6px;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dust);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+textarea {
+  width: 100%;
+  margin-top: 6px;
+  background: var(--night-2);
+  border: 1px solid rgba(244, 233, 211, 0.22);
+  border-radius: 4px;
+  color: var(--stub);
+  font-family: var(--font-body);
+  font-size: 16px;
+  padding: 10px 12px;
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--marquee);
+  outline: none;
+}
+
+input[type="date"] {
+  color-scheme: dark;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.hint {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 13px;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--dust);
+  margin: 4px 0 8px;
+  font-weight: 400;
+}
+
+.form-error {
+  color: #ff9d97;
+  background: rgba(200, 67, 60, 0.14);
+  border: 1px solid rgba(200, 67, 60, 0.4);
+  border-radius: 4px;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.venue-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 16px;
+  margin-top: 4px;
+}
+
+/* ------------------------------ chips / lineup --------------------------- */
+
+.chip-row {
+  margin-top: 6px;
+}
+
+.lineup {
+  list-style: none;
+  margin: 6px 0 10px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--night-2);
+  border: 1px solid rgba(244, 233, 211, 0.22);
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--stub);
+}
+
+.lineup-slot {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--marquee);
+}
+
+.chip-x {
+  background: none;
+  border: none;
+  color: var(--dust);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0 2px;
+  line-height: 1;
+}
+.chip-x:hover {
+  color: var(--stub);
+}
+
+/* ------------------------------- combobox -------------------------------- */
+
+.combobox {
+  position: relative;
+  margin-top: 6px;
+}
+
+.combobox-list {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  background: var(--night-2);
+  border: 1px solid rgba(244, 233, 211, 0.3);
+  border-radius: 4px;
+  max-height: 260px;
+  overflow-y: auto;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+.combobox-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.combobox-list li.active {
+  background: rgba(255, 181, 63, 0.16);
+}
+
+.combobox-list .sublabel {
+  color: var(--dust);
+  font-size: 13px;
+}
+
+.combobox-list .create-row {
+  color: var(--marquee);
+  border-top: 1px dashed rgba(244, 233, 211, 0.2);
+}
+
+/* -------------------------------- rating --------------------------------- */
+
+.rating-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.star {
+  background: none;
+  border: none;
+  font-size: 26px;
+  color: rgba(244, 233, 211, 0.25);
+  cursor: pointer;
+  padding: 0 2px;
+}
+
+.star.filled {
+  color: var(--marquee);
+}
+
+/* ----------------------------- detail page ------------------------------- */
+
+.back-link {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  text-decoration: none;
+  color: var(--dust);
+}
+.back-link:hover {
+  color: var(--stub);
+}
+
+.detail-header {
+  margin: 24px 0 8px;
+}
+
+.detail-date {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--marquee);
+}
+
+.detail-headliner {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(40px, 8vw, 64px);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin: 8px 0 4px;
+  overflow-wrap: anywhere;
+}
+
+.detail-openers {
+  font-style: italic;
+  color: var(--dust);
+  margin: 0 0 10px;
+}
+
+.detail-venue {
+  font-size: 17px;
+  margin: 0;
+}
+
+.detail-rating {
+  color: var(--marquee);
+  font-size: 18px;
+  letter-spacing: 3px;
+  margin: 10px 0 0;
+}
+
+.detail-rating .rating-empty {
+  color: rgba(244, 233, 211, 0.18);
+}
+
+.detail-notes {
+  margin: 24px 0;
+  padding: 16px 18px;
+  background: var(--night-2);
+  border-left: 3px solid var(--marquee);
+  border-radius: 0 4px 4px 0;
+  white-space: pre-wrap;
+  color: var(--stub);
+}
+
+.detail-photos {
+  margin-top: 36px;
+}
+
+.photos-header {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.photos-header h2 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.photo-cell {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 1;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.photo-open {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: zoom-in;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.photo-cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.photo-delete {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(23, 20, 31, 0.75);
+  color: var(--stub);
+  font-size: 16px;
+  cursor: pointer;
+  line-height: 1;
+}
+.photo-delete:hover {
+  background: var(--red);
+}
+
+.detail-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px dashed rgba(244, 233, 211, 0.2);
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 8, 15, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+  z-index: 50;
+  padding: 24px;
+}
+
+.lightbox img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 4px;
+}
+
+/* -------------------------------- auth ----------------------------------- */
+
+.auth-wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.auth-card {
+  width: 100%;
+  background: var(--night-2);
+  border: 1px solid rgba(244, 233, 211, 0.16);
+  border-radius: 8px;
+  padding: 36px;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--marquee);
+  margin: 0 0 6px;
+}
+
+.auth-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 42px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  margin: 0 0 8px;
+}
+
+.auth-sub {
+  color: var(--dust);
+  margin: 0 0 24px;
+}
+
+.auth-toggle {
+  display: flex;
+  gap: 4px;
+  background: var(--night);
+  border-radius: 4px;
+  padding: 4px;
+  margin-bottom: 8px;
+}
+
+.auth-toggle button {
+  flex: 1;
+  background: none;
+  border: none;
+  border-radius: 3px;
+  padding: 8px;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dust);
+  cursor: pointer;
+}
+
+.auth-toggle button.active {
+  background: var(--marquee);
+  color: var(--ink);
+}
+
+.auth-card .btn-primary {
+  width: 100%;
+  margin-top: 24px;
+}
+
+/* ------------------------------ page states ------------------------------ */
+
+.page-loading,
+.page-error {
+  text-align: center;
+  color: var(--dust);
+  padding: 64px 20px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.08em;
+}
+
+.page-error {
+  color: #ff9d97;
+}
+
+/* ------------------------------ responsive ------------------------------- */
+
+@media (max-width: 560px) {
+  .marquee {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .ticket-stub-edge {
+    flex-basis: 52px;
+  }
+
+  .ticket::before,
+  .ticket::after {
+    left: 52px;
+  }
+
+  .ticket-headliner {
+    font-size: 24px;
+  }
+
+  .venue-details {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-strip {
+    gap: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticket {
+    transition: none;
+  }
+  .ticket:hover {
+    transform: none;
+  }
+}
